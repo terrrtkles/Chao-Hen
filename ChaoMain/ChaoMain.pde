@@ -70,14 +70,24 @@ void mouseReleased(){
   body.addForce(force);
 }
 
-//https://forum.processing.org/one/topic/drawing-an-arrow.html
 void arrow(int x1, int y1, int x2, int y2) {
   line(x1, y1, x2, y2);
+  if(x1 > x2){
+  pushMatrix();
+  translate(x2, y2);
+  float a = atan2(x2-x1, y1-y2);
+  rotate(a);
+  line(0, 0, (x2-x1)/3, (x1-x2)/3);
+  line(0, 0, (x1-x2)/3, (x1-x2)/3);
+  popMatrix();
+  }
+  else {
   pushMatrix();
   translate(x2, y2);
   float a = atan2(x1-x2, y2-y1);
   rotate(a);
-  line(0, 0, -10, -10);
-  line(0, 0, 10, -10);
+  line(0, 0, (x2-x1)/3, (x1-x2)/3);
+  line(0, 0, (x1-x2)/3, (x1-x2)/3);
   popMatrix();
+  }
 } 
