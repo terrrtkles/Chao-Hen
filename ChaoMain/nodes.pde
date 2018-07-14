@@ -11,7 +11,7 @@ class nodes{
     nodes(int initialX, int initialY, int size, int mass){
       vel = new PVector(1.4,2);
       acc = new PVector(0,0);
-      gravity = new PVector(0, 0.2);
+      gravity = new PVector(0, 0.3);
       pos = new PVector(initialX, initialY);
       force = new PVector(0,0);
       this.size = size;
@@ -45,9 +45,12 @@ class nodes{
         
     }
       
-    
     void addForce(PVector force){
       this.force = force;
+    }
+    
+    int getMass(){
+      return this.mass;
     }
     
 }

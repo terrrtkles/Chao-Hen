@@ -1,4 +1,4 @@
-nodes body = new nodes(100,100,100,20);
+nodes body = new nodes(100,100,100,10);
 PVector initMouse = new PVector(0,0);
 PVector finalMouse = new PVector(0,0);
 boolean mouseP = false;
@@ -27,7 +27,7 @@ void mousePressed(){
 
 void mouseReleased(){
   mouseP = false; 
-  body.addForce(new PVector((mouseX - initMouse.x)/2, (mouseY - initMouse.y)/4));
+  body.addForce(new PVector((mouseX - initMouse.x)/body.getMass(), (mouseY - initMouse.y)/body.getMass()));
 }
 
 //https://forum.processing.org/one/topic/drawing-an-arrow.html
