@@ -4,8 +4,9 @@ void setup() {
 }
 
 void draw(){
-  PVector gravity = new PVector(0,-9.8);
   background(43);
-  nodes body = new nodes(20,20,20);
+  nodes body = new nodes(50,50,20,20);
+  body.update(false);
   body.show();
+  
 }
