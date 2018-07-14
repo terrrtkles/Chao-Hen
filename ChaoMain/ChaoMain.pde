@@ -1,21 +1,49 @@
+import controlP5.*;
+import java.util.*;
+
 nodes body = new nodes(100,10);
 limbs armR = new limbs(5, body, 10, 0, 40);
 limbs armL = new limbs(5, body, -90, 0, 40);
 limbs head = new limbs(1, body, -60, 15, 60);
-limbs legR = new limbs(5, body, 10, -80, 40);
-limbs legL = new limbs(5, body, -90, -80, 40);
+limbs legR = new limbs(3.5, body, 10, -80, 40);
+limbs legL = new limbs(3.5, body, -90, -80, 40);
 limbs[] parts = {armR, armL, head, legL, legR};
+
+PImage bg;
+
 PVector initMouse = new PVector(0,0);
 PVector finalMouse = new PVector(0,0);
 boolean mouseP = false;
+
+ControlP5 cp5;
+
 void setup() {
   size(800, 800); //size of the window
+  bg = loadImage("game_bg-default.png");
   frameRate(100);
   
+  cp5 = new ControlP5(this);
+  cp5.setColorBackground(color(211,211,211, 50));
+  List l = Arrays.asList("Fling", "Drag", "'Splody Hands", "Change Skin", "Add Text");
+  /* add a ScrollableList, by default it behaves like a DropdownList */
+  cp5.addScrollableList("options")
+    .setOpen(false)
+    .setPosition(30, 30)
+    .setSize(200, 400)
+    .setBarHeight(30)
+    .setItemHeight(30)
+    .addItems(l)
+    .setColorValue(0xff2b2b2b)
+    .setFont(createFont("gadugi",12))
+    .setBackgroundColor(0x00FFFFFF);
+    // .setType(ScrollableList.LIST) // currently supported DROPDOWN and LIST
+    ;
+    
+    cp5.getController("options").getCaptionLabel().setColor(color(0xff2b2b2b) );
 }
 
 void draw(){
-  background(43);
+  background(bg);
   stroke(255);
   body.move();
   body.show();

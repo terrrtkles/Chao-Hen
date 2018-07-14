@@ -41,6 +41,7 @@ class limbs{
   void display() {
       strokeWeight(1);
       ellipse(x, y, radius, radius);
+      fill(43);
   }
   nodes getParent(){
     return parent;

@@ -10,7 +10,7 @@ class nodes{
   int mass;
   
     nodes(int size, int mass){
-      vel = new PVector(10,0);
+      vel = new PVector(0,0);
       acc = new PVector(0,0);
       gravity = new PVector(0, 0.15);
       pos = new PVector(400, 700);
@@ -22,13 +22,19 @@ class nodes{
     void show(){
       strokeWeight(1);
       ellipse(pos.x, pos.y, size, size);
+      fill(43);
     }
     
     void move(){
         
-        if(pos.x > width-(size + 10)/2 || pos.x < (size + 10)/2){
-          vel.x = vel.x * -1;
+        if(pos.x >= width-(size + 10)/2){
+          vel.x = vel.x * -0.95;
+          pos.x = width - (size + 10)/2;
+        }else if(pos.x <= (size + 10)/2){
+          vel.x = vel.x * -0.95;
+          pos.x = (size + 10)/2;
         }
+        
         if(pos.y > height-(size + 20)/2 ){
           if(vel.y < 1)
             vel.y = 0;
@@ -43,14 +49,17 @@ class nodes{
         
         vel.add(gravity);
         vel.add(force);
-        vel.limit(20);
+        vel.limit(25);
         force.set(0,0);
         pos.add(vel);
-        
     }
     
     void addForce(PVector force){
      this.force = force;
+    }
+    
+    void setGravity(float g){
+      this.gravity.y = g;
     }
     
     float getX(){
