@@ -8,6 +8,7 @@ limbs head = new limbs(1, body, -82, -10, 80, new String[] {"images/hao2_fix.png
 limbs legR = new limbs(3.5, body, 0, -85, 35, new String[] {"images/legstub1.png"});
 limbs legL = new limbs(3.5, body, -70, -85, 35, new String[] {"images/legstub2.png"});
 limbs[] parts = {armR, armL, head, legL, legR};
+String[][] skins = {new String[] {"images/hao2_fix.png", "images/hao1_fix.png"}, new String[] {"images/blanchard1_fix.png", "images/blanchard2_fix.png"}};
 
 PImage bg;
 PImage boom;
@@ -69,11 +70,18 @@ void draw(){
   if(menu == 2.0){
     splode();
   }
+  if(menu == 3.0){
+    if(curSkin == skins.length -1)
+      curSkin = -1;
+    curSkin++;
+    parts[2].setPath(skins[curSkin]);
+    cp5.getController("options").setValue(0);
+    menu = 0;
+  }
 }
 
 void controlEvent(ControlEvent theEvent){
   if(theEvent.isController()){
-    println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
     menu = theEvent.getController().getValue();
   }
 }
