@@ -10,6 +10,8 @@ limbs legL = new limbs(3.5, body, -60, -75, 30, new String[] {"images/suit_lpant
 limbs[] parts = {armR, armL, head, legL, legR};
 
 PImage bg;
+PImage boom;
+float menu = 0.0;
 
 PVector initMouse = new PVector(0,0);
 PVector finalMouse = new PVector(0,0);
@@ -56,10 +58,21 @@ void draw(){
     limb.display();
   }
   
-  if(mouseP){
-    strokeWeight(4 + dist((int)initMouse.x, (int)initMouse.y, mouseX, mouseY)/10);
-    stroke(0 + dist((int)initMouse.x, (int)initMouse.y, mouseX, mouseY), 255 - dist((int)initMouse.x, (int)initMouse.y, mouseX, mouseY), 0);
-    arrow((int)initMouse.x, (int)initMouse.y, mouseX, mouseY);
+  if(menu == 0.0){
+    fling();
+  }
+  /*if(menu == 1.0){
+    drag();
+  }*/
+  if(menu == 2.0){
+    splode();
+  }
+}
+
+void controlEvent(ControlEvent theEvent){
+  if(theEvent.isController()){
+    println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
+    menu = theEvent.getController().getValue();
   }
 }
 
@@ -70,18 +83,53 @@ void mousePressed(){
 
 void mouseReleased(){
   mouseP = false; 
+  if(menu == 0.0){
   PVector force = new PVector((mouseX - initMouse.x)/body.getMass(), (mouseY - initMouse.y)/body.getMass());
   body.addForce(force);
+  }
+}
+
+void fling(){
+  if(mouseP){
+    strokeWeight(4 + dist((int)initMouse.x, (int)initMouse.y, mouseX, mouseY)/10);
+    stroke(0 + dist((int)initMouse.x, (int)initMouse.y, mouseX, mouseY), 255 - dist((int)initMouse.x, (int)initMouse.y, mouseX, mouseY), 0);
+    arrow((int)initMouse.x, (int)initMouse.y, mouseX, mouseY);
+  }
+}
+
+void splode(){
+  if(mouseP){
+  float pow = 150000;
+  float xx = body.getX() - initMouse.x;
+  float yy = body.getY() - initMouse.y;
+  PVector shat = new PVector((xx)/sqrt(sq(xx)+sq(yy)), (yy)/sqrt(sq(xx)+sq(yy)));
+  PVector forcepow = new PVector((pow*shat.x)/((sq(xx)+sq(yy)*body.getMass())),(pow*shat.y)/((sq(xx)+sq(yy))*body.getMass()));
+  body.addForce(forcepow);
+  
+  boom = loadImage("boom.png");
+  image(boom,mouseX-100,mouseY-100,200,200);
+  }
 }
 
 //https://forum.processing.org/one/topic/drawing-an-arrow.html
 void arrow(int x1, int y1, int x2, int y2) {
   line(x1, y1, x2, y2);
+  if(x1 > x2){
+  pushMatrix();
+  translate(x2, y2);
+  float a = atan2(x2-x1, y1-y2);
+  rotate(a);
+  line(0, 0, (x2-x1)/3, (x1-x2)/3);
+  line(0, 0, (x1-x2)/3, (x1-x2)/3);
+  popMatrix();
+  }
+  else {
   pushMatrix();
   translate(x2, y2);
   float a = atan2(x1-x2, y2-y1);
   rotate(a);
-  line(0, 0, -10, -10);
-  line(0, 0, 10, -10);
+  line(0, 0, (x2-x1)/3, (x1-x2)/3);
+  line(0, 0, (x1-x2)/3, (x1-x2)/3);
   popMatrix();
+  }
 } 
