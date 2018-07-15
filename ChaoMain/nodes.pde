@@ -70,6 +70,10 @@
       this.gravity.y = g;
     }
     
+    void setPos(PVector pos){
+     this.pos = pos;
+    }
+    
     float getX(){
       return pos.x;
     }
@@ -86,4 +90,7 @@
       return this.mass;
     }
     
+    int getSize(){
+     return this.size;
+    }
 }
