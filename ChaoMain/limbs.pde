@@ -8,17 +8,25 @@ class limbs{
   float radius;
   float offsetX;
   float offsetY;
+  PImage im;
+  String[] p;
   nodes parent;
   
-  limbs(float m, nodes body, float offX, float offY, float radius) {
+  limbs(float m, nodes body, float offX, float offY, float radius, String[] path) {
     offsetX = offX;
     offsetY = offY;
     nodes parent = body;  
+    p = path;
     x = parent.pos.x + offsetX + radius;
     y = parent.pos.y - offsetY - radius;
     mass = m;
     this.radius = radius;
     gravity = body.gravity.y;
+    p = path;
+  }
+  
+  void setIm(){
+    im = loadImage(p[0]);
   }
   
   void update() {
@@ -27,23 +35,31 @@ class limbs{
     float forceX = (targetX - x) * stiffness;
     float ax = forceX / mass;
     vx = damping * (vx + ax);
-    vx = constrain(vx, -20, 20);
     x += vx;
     float forceY = (targetY - y) * stiffness;
     forceY += gravity;
     float ay = forceY / mass;
     vy = damping * (vy + ay);
-    vy = constrain(vy, -20, 20);
     y += vy;
     
   }
   
   void display() {
-      strokeWeight(1);
-      ellipse(x, y, radius, radius);
-      fill(43);
+      if(p.length > 1){
+        if(vx > 2 || vy > 2)
+          im = loadImage(p[1]);
+        else
+          im = loadImage(p[0]);
+      }
+      image(im, x - radius/2, y - radius/2, radius, radius);
   }
+  
+  void setPath(String[] newP){
+    p = newP;
+  }
+  
   nodes getParent(){
     return parent;
   }
+  
 }
