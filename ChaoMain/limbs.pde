@@ -46,7 +46,7 @@ class limbs{
   
   void display() {
       if(p.length > 1){
-        if(vx > 2 || vy > 2)
+        if(sqrt(sq(vx)+sq(vy)) > 2)
           im = loadImage(p[1]);
         else
           im = loadImage(p[0]);
