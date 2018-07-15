@@ -1,12 +1,12 @@
 import controlP5.*;
 import java.util.*;
 
-nodes body = new nodes(100,10);
-limbs armR = new limbs(5, body, 10, 0, 40);
-limbs armL = new limbs(5, body, -90, 0, 40);
-limbs head = new limbs(1, body, -60, 15, 60);
-limbs legR = new limbs(3.5, body, 10, -80, 40);
-limbs legL = new limbs(3.5, body, -90, -80, 40);
+nodes body = new nodes(100,10, "images/suit_shirt.png");
+limbs armR = new limbs(5, body, 10, -10, 35, new String[] {"images/armstub1.png"});
+limbs armL = new limbs(5, body, -105, -40, 55, new String[] {"images/suit_larm.png"});
+limbs head = new limbs(1, body, -82, -10, 80, new String[] {"images/hao2_fix.png", "images/hao1_fix.png"});
+limbs legR = new limbs(3.5, body, 0, -75, 30, new String[] {"images/suit_rpantfix.png"});
+limbs legL = new limbs(3.5, body, -60, -75, 30, new String[] {"images/suit_lpantfix.png"});
 limbs[] parts = {armR, armL, head, legL, legR};
 
 PImage bg;
@@ -40,6 +40,10 @@ void setup() {
     ;
     
     cp5.getController("options").getCaptionLabel().setColor(color(0xff2b2b2b) );
+    body.setIm();
+    for(limbs limb: parts){
+      limb.setIm();
+    }
 }
 
 void draw(){
