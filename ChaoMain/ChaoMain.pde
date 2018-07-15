@@ -31,6 +31,10 @@ boolean mouseP = false;
 boolean over = false;
 boolean move = false;
 
+int num = 2;
+int[] x = new int[num];
+int[] y = new int[num];
+
 ControlP5 cp5;
 
 void setup() {
@@ -156,8 +160,10 @@ void mouseReleased(){
   }
   if(menu == 1.0){
     move = false;
-    PVector force = new PVector();
-    body.addForce(force);
+    if(over == true && (x[1] != x[0] || y[1] != y[0])){
+      PVector force = new PVector(100*(x[1]-x[0])/body.getMass(),100*(y[1]-y[0])/body.getMass());
+      body.addForce(force);
+    }
   }
 }
 
@@ -179,6 +185,10 @@ void drag(){
   if(move){
     PVector here = new PVector(mouseX,mouseY);
     body.setPos(here);
+    x[0] = x[1];
+    y[0] = y[1];
+    x[1] = mouseX;
+    y[1] = mouseY;
   }
 }
 
