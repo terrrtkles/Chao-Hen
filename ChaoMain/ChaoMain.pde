@@ -3,10 +3,10 @@ import java.util.*;
 
 nodes body = new nodes(100,10, "images/suit_shirt.png");
 limbs armR = new limbs(5, body, 10, -10, 35, new String[] {"images/armstub1.png"});
-limbs armL = new limbs(5, body, -105, -40, 55, new String[] {"images/suit_larm.png"});
+limbs armL = new limbs(5, body, -80, -10, 35, new String[] {"images/armstub2.png"});
 limbs head = new limbs(1, body, -82, -10, 80, new String[] {"images/hao2_fix.png", "images/hao1_fix.png"});
-limbs legR = new limbs(3.5, body, 0, -75, 30, new String[] {"images/suit_rpantfix.png"});
-limbs legL = new limbs(3.5, body, -60, -75, 30, new String[] {"images/suit_lpantfix.png"});
+limbs legR = new limbs(3.5, body, 0, -85, 35, new String[] {"images/legstub1.png"});
+limbs legL = new limbs(3.5, body, -70, -85, 35, new String[] {"images/legstub2.png"});
 limbs[] parts = {armR, armL, head, legL, legR};
 
 PImage bg;
