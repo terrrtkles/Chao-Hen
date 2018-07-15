@@ -71,6 +71,10 @@ void setup() {
 
 void draw(){
   background(bg);
+  if(superGrav > 0)
+    text("Low Gravity: ON", 570, 100);
+  if(superBounce > 0)
+    text("Super Bounce: ON", 40, 100);
   stroke(255);
   body.move();
   body.show();
