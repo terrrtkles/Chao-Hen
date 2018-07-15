@@ -124,7 +124,7 @@ void draw(){
       superBounce *= -1;
     }else{
       body.bounce = .5;
-      superGrav *= -1;
+      superBounce *= -1;
     }
     cp5.getController("options").setValue(prevMenu);
     menu = prevMenu;
