@@ -50,7 +50,7 @@ void setup() {
   
   cp5 = new ControlP5(this);
   cp5.setColorBackground(color(211,211,211, 50));
-  List l = Arrays.asList("Fling", "Drag", "'Splody Hands", "Change Skin", "Low Gravity", "Super Bounce");
+  List l = Arrays.asList("Fling", "Drag", "'Splody Hands", "Low Gravity", "Super Bounce", "Change Head", "Change Skin");
   /* add a ScrollableList, by default it behaves like a DropdownList */
   cp5.addScrollableList("options")
     .setOpen(false)
