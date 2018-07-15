@@ -1,4 +1,7 @@
+import ddf.minim.*;
+
 import controlP5.*;
+import processing.sound.*;
 import java.util.*;
 
 nodes body = new nodes(100,10, "images/suit_shirt.png");
@@ -12,8 +15,16 @@ String[][] skins = {new String[] {"images/hao2_fix.png", "images/hao1_fix.png"},
 
 PImage bg;
 PImage boom;
+Minim minim;
+AudioPlayer booms;
+AudioPlayer hao;
+AudioPlayer blanch;
+AudioPlayer[] sounds;
+float prevMenu = 0;
 float menu = 0.0;
 int curSkin = 0;
+int superGrav = -1;
+int superBounce = -1;
 
 PVector initMouse = new PVector(0,0);
 PVector finalMouse = new PVector(0,0);
@@ -24,13 +35,19 @@ boolean move = false;
 ControlP5 cp5;
 
 void setup() {
+  minim = new Minim(this);
+  booms = minim.loadFile("boom.mp3");
+  hao = minim.loadFile( "haoScreamingFull.mp3");
+  blanch = minim.loadFile( "IT DEPENDS 2.mp3");
+  this.sounds = new AudioPlayer[] {hao, blanch};
+  
   size(800, 800); //size of the window
   bg = loadImage("game_bg-default.png");
   frameRate(100);
   
   cp5 = new ControlP5(this);
   cp5.setColorBackground(color(211,211,211, 50));
-  List l = Arrays.asList("Fling", "Drag", "'Splody Hands", "Change Skin", "Add Text");
+  List l = Arrays.asList("Fling", "Drag", "'Splody Hands", "Change Skin", "Low Gravity", "Super Bounce");
   /* add a ScrollableList, by default it behaves like a DropdownList */
   cp5.addScrollableList("options")
     .setOpen(false)
@@ -47,6 +64,7 @@ void setup() {
     
     cp5.getController("options").getCaptionLabel().setColor(color(0xff2b2b2b) );
     body.setIm();
+    body.setSound(hao);
     for(limbs limb: parts){
       limb.setIm();
     }
@@ -61,24 +79,54 @@ void draw(){
     limb.update();
     limb.display();
   }
+  float points = body.getPoints();
+  textSize(20);
+  text("POINTS: " + points, 570, 50);
   
   if(menu == 0.0){
     fling();
+    prevMenu = menu;
   }
   if(menu == 1.0){
     drag();
+    prevMenu = menu;
   }
   if(menu == 2.0){
     splode();
+    prevMenu = menu;
   }
   if(menu == 3.0){
     if(curSkin == skins.length -1)
       curSkin = -1;
     curSkin++;
     parts[2].setPath(skins[curSkin]);
-    cp5.getController("options").setValue(0);
-    menu = 0;
+    body.setSound(sounds[curSkin]);
+    cp5.getController("options").setValue(prevMenu);
+    menu = prevMenu;
   }
+  if(menu == 4.0){
+    if(superGrav <0){
+      body.gravity.y = .05;
+      superGrav *= -1;
+    }else{
+      body.gravity.y = .15;
+      superGrav *= -1;
+    }
+    cp5.getController("options").setValue(prevMenu);
+    menu = prevMenu;
+  }
+  if(menu == 5.0){
+    if(superBounce <0){
+      body.bounce = .8;
+      superBounce *= -1;
+    }else{
+      body.bounce = .5;
+      superGrav *= -1;
+    }
+    cp5.getController("options").setValue(prevMenu);
+    menu = prevMenu;
+  }
+    
 }
 
 void controlEvent(ControlEvent theEvent){
@@ -142,6 +190,8 @@ void splode(){
   
   boom = loadImage("boom.png");
   image(boom,mouseX-100,mouseY-100,200,200);
+  booms.play();
+  booms.rewind();
   }
 }
 
