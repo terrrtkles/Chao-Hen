@@ -102,7 +102,7 @@ void draw(){
     splode();
     prevMenu = menu;
   }
-  if(menu == 3.0){
+  if(menu == 5.0){
     if(curSkin == skins.length -1)
       curSkin = -1;
     curSkin++;
@@ -111,7 +111,7 @@ void draw(){
     cp5.getController("options").setValue(prevMenu);
     menu = prevMenu;
   }
-  if(menu == 4.0){
+  if(menu == 3.0){
     if(superGrav <0){
       body.gravity.y = .05;
       superGrav *= -1;
@@ -122,7 +122,7 @@ void draw(){
     cp5.getController("options").setValue(prevMenu);
     menu = prevMenu;
   }
-  if(menu == 5.0){
+  if(menu == 4.0){
     if(superBounce <0){
       body.bounce = .8;
       superBounce *= -1;
@@ -130,6 +130,16 @@ void draw(){
       body.bounce = .5;
       superBounce *= -1;
     }
+    cp5.getController("options").setValue(prevMenu);
+    menu = prevMenu;
+  }
+  if(menu == 6){
+    String stripper = "images/stripper_torso.png";
+    if(!body.p.equals( stripper)){
+      body.p= stripper; body.setIm();
+  }
+    else
+      body.im = loadImage("images/suit_shirt.png");
     cp5.getController("options").setValue(prevMenu);
     menu = prevMenu;
   }
