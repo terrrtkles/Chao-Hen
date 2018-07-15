@@ -36,7 +36,7 @@ ControlP5 cp5;
 void setup() {
   minim = new Minim(this);
   booms = minim.loadFile("boom.mp3");
-  hao = minim.loadFile( "haoScreamingFull.mp3");
+  hao = minim.loadFile( "wthHao.mp3");
   blanch = minim.loadFile( "IT DEPENDS 2.mp3");
   this.sounds = new AudioPlayer[] {hao, blanch};
   
