@@ -1,7 +1,6 @@
 import ddf.minim.*;
 
 import controlP5.*;
-import processing.sound.*;
 import java.util.*;
 
 nodes body = new nodes(100,10, "images/suit_shirt.png");
