@@ -138,8 +138,10 @@ void draw(){
     if(!body.p.equals( stripper)){
       body.p= stripper; body.setIm();
   }
-    else
+    else{
+      body.p = "images/suit_shirt.png";
       body.im = loadImage("images/suit_shirt.png");
+    }
     cp5.getController("options").setValue(prevMenu);
     menu = prevMenu;
   }
