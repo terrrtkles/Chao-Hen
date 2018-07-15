@@ -16,6 +16,8 @@ float menu = 0.0;
 PVector initMouse = new PVector(0,0);
 PVector finalMouse = new PVector(0,0);
 boolean mouseP = false;
+boolean over = false;
+boolean move = false;
 
 ControlP5 cp5;
 
@@ -61,9 +63,9 @@ void draw(){
   if(menu == 0.0){
     fling();
   }
-  /*if(menu == 1.0){
+  if(menu == 1.0){
     drag();
-  }*/
+  }
   if(menu == 2.0){
     splode();
   }
@@ -79,13 +81,23 @@ void controlEvent(ControlEvent theEvent){
 void mousePressed(){
   mouseP = true;
   initMouse.set(mouseX, mouseY);
+  if(menu == 1.0){
+    if(over){
+      move = true;
+    }
+  }
 }
 
 void mouseReleased(){
   mouseP = false; 
   if(menu == 0.0){
-  PVector force = new PVector((mouseX - initMouse.x)/body.getMass(), (mouseY - initMouse.y)/body.getMass());
-  body.addForce(force);
+    PVector force = new PVector((mouseX - initMouse.x)/body.getMass(), (mouseY - initMouse.y)/body.getMass());
+    body.addForce(force);
+  }
+  if(menu == 1.0){
+    move = false;
+    PVector force = new PVector();
+    body.addForce(force);
   }
 }
 
@@ -94,6 +106,19 @@ void fling(){
     strokeWeight(4 + dist((int)initMouse.x, (int)initMouse.y, mouseX, mouseY)/10);
     stroke(0 + dist((int)initMouse.x, (int)initMouse.y, mouseX, mouseY), 255 - dist((int)initMouse.x, (int)initMouse.y, mouseX, mouseY), 0);
     arrow((int)initMouse.x, (int)initMouse.y, mouseX, mouseY);
+  }
+}
+
+void drag(){
+  int radius = body.getSize()/2;
+  if(mouseX > body.getX()-radius && mouseX < radius+body.getX() && mouseY > body.getY()-radius && mouseY < body.getY()+radius){
+    over = true;
+  }else{
+    over = false;
+  }
+  if(move){
+    PVector here = new PVector(mouseX,mouseY);
+    body.setPos(here);
   }
 }
 
