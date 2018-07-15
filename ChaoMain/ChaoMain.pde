@@ -13,6 +13,7 @@ String[][] skins = {new String[] {"images/hao2_fix.png", "images/hao1_fix.png"},
 PImage bg;
 PImage boom;
 float menu = 0.0;
+int curSkin = 0;
 
 PVector initMouse = new PVector(0,0);
 PVector finalMouse = new PVector(0,0);
